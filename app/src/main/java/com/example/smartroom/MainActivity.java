@@ -1,9 +1,10 @@
-package com.example.smartroom;   // <-- change to your real package name
+package com.example.smartroom;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,9 +41,8 @@ public class MainActivity extends AppCompatActivity {
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: open Publish screen
-                Toast.makeText(MainActivity.this,
-                        "Publish clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, PublisherActivity.class);
+                startActivity(intent);
             }
         });
 
