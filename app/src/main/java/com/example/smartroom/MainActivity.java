@@ -12,7 +12,7 @@ import com.example.smartroom.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnPoliceStation;
+    private Button btnAirQuality;
     private Button btnPublish;
     private Button btnSubscribe;
     private Button btnSettings;
@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);   // uses your XML
 
         // 1. Connect XML views to Java
-        btnPoliceStation = findViewById(R.id.btnPoliceStation);
+        btnAirQuality = findViewById(R.id.btnAirQuality);
         btnPublish       = findViewById(R.id.btnPublish);
         btnSubscribe     = findViewById(R.id.btnSubscribe);
         btnSettings      = findViewById(R.id.btnSettings);
 
         // 2. Set click listeners
-        btnPoliceStation.setOnClickListener(new View.OnClickListener() {
+        btnAirQuality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: open Police Station screen or do something
