@@ -24,17 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
         // 1. Connect XML views to Java
         btnAirQuality = findViewById(R.id.btnAirQuality);
-        btnPublish       = findViewById(R.id.btnPublish);
-        btnSubscribe     = findViewById(R.id.btnSubscribe);
-        btnSettings      = findViewById(R.id.btnSettings);
+        btnPublish    = findViewById(R.id.btnPublish);
+        btnSubscribe  = findViewById(R.id.btnSubscribe);
+        btnSettings   = findViewById(R.id.btnSettings);
 
         // 2. Set click listeners
         btnAirQuality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: open Police Station screen or do something
-                Toast.makeText(MainActivity.this,
-                        "Police Station clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, AirQualityActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         btnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: open Subscribe screen
                 Toast.makeText(MainActivity.this,
                         "Subscribe clicked", Toast.LENGTH_SHORT).show();
             }
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: open Settings screen
                 Toast.makeText(MainActivity.this,
                         "Settings clicked", Toast.LENGTH_SHORT).show();
             }
