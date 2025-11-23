@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -21,11 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hivemq.client.mqtt.MqttClient;
-import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
-
 import java.io.File;
-import java.io.IOException;
 
 public class PublisherActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -43,31 +40,16 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
     private Sensor accelerometer;
     private boolean isSensing = false;
 
-    // Latest sensor values
-    private float lastLux = 0f;
-    private float lastAx = 0f;
-    private float lastAy = 0f;
-    private float lastAz = 0f;
-
     // ---- Sound (microphone) ----
     private static final int REQ_RECORD_AUDIO = 1001;
     private MediaRecorder mediaRecorder;
     private Handler soundHandler = new Handler(Looper.getMainLooper());
     private boolean isSoundSensing = false;
-    private float lastSoundLevel = 0f;   // raw amplitude 0..32767
 
-    // ---- MQTT (HiveMQ client) ----
+    // ---- ViewModel (MQTT + sensor values + publishing state) ----
+    private PublisherViewModel viewModel;
+
     private static final String TAG = "SmartRoomMQTT";
-
-    // TODO: set this to your Mac's IP
-    private String serverHost = "192.168.1.131";
-    private int serverPort = 1883;
-
-    // Topic where sensor data will be published
-    private String publishingTopic = "smartroom/test";
-
-    private Mqtt3AsyncClient mqttClient;
-    private boolean isMqttConnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,9 +60,58 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
         txtConnectionStatus = findViewById(R.id.txtConnectionStatus);
         txtLightValue       = findViewById(R.id.txtLightValue);
         txtAccelValue       = findViewById(R.id.txtAccelValue);
-        txtSoundValue       = findViewById(R.id.txtSoundValue); // may be null if not in XML
+        txtSoundValue       = findViewById(R.id.txtSoundValue);
         btnStartPublishing  = findViewById(R.id.btnStartPublishing);
         btnStopPublishing   = findViewById(R.id.btnStopPublishing);
+
+        // ---- ViewModel ----
+        viewModel = new ViewModelProvider(this).get(PublisherViewModel.class);
+
+        // Connection status label
+        viewModel.getStatusText().observe(this, text -> {
+            if (text != null) txtConnectionStatus.setText(text);
+        });
+
+        // Sensor values → update UI (and they re-apply after rotation)
+        viewModel.getLightLiveData().observe(this, lux -> {
+            if (lux != null) txtLightValue.setText("Light: " + lux + " lx");
+        });
+
+        viewModel.getAccelXLiveData().observe(this, x -> updateAccelLabel());
+        viewModel.getAccelYLiveData().observe(this, y -> updateAccelLabel());
+        viewModel.getAccelZLiveData().observe(this, z -> updateAccelLabel());
+
+        viewModel.getSoundLiveData().observe(this, sound -> {
+            if (sound != null) {
+                txtSoundValue.setText("Sound level: " + sound);
+            }
+        });
+
+        // Publishing state: on rotation, this observer will fire
+        viewModel.getIsPublishing().observe(this, publishing -> {
+            if (publishing == null) return;
+
+            if (publishing) {
+                // Make sure MQTT is connected
+                viewModel.connectToBroker();
+
+                // Resume sensors if not active
+                if (!isSensing) {
+                    startSensing();
+                }
+
+                // Resume mic if permission is granted and not active
+                if (!isSoundSensing &&
+                        ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                                == PackageManager.PERMISSION_GRANTED) {
+                    startSoundSensing();
+                }
+            } else {
+                // User stopped publishing → stop sensors/mic
+                if (isSensing) stopSensing();
+                if (isSoundSensing) stopSoundSensing();
+            }
+        });
 
         // ---- Sensors ----
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -91,30 +122,32 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
 
         if (lightSensor == null && accelerometer == null) {
             txtConnectionStatus.setText("No sensors available");
-        } else {
-            txtConnectionStatus.setText("Sensors ready, MQTT not connected");
         }
 
-        // Create MQTT client object (doesn't connect yet)
-        createMQTTclient();
+        // Start button
+        btnStartPublishing.setOnClickListener(v -> ensureAudioPermissionAndStart());
 
-        // Start button: request mic permission, connect MQTT + start sensing
-        btnStartPublishing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ensureAudioPermissionAndStart();
-            }
+        // Stop button
+        btnStopPublishing.setOnClickListener(v -> {
+            viewModel.stopPublishing();
+            stopSensing();
+            stopSoundSensing();
+            viewModel.disconnectFromBroker();
         });
+    }
 
-        // Stop button: stop sensing + disconnect MQTT
-        btnStopPublishing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopSensing();
-                stopSoundSensing();
-                disconnectFromBroker();
-            }
-        });
+    private void updateAccelLabel() {
+        Float ax = viewModel.getAccelXLiveData().getValue();
+        Float ay = viewModel.getAccelYLiveData().getValue();
+        Float az = viewModel.getAccelZLiveData().getValue();
+        if (ax == null || ay == null || az == null) return;
+
+        txtAccelValue.setText(
+                "Accel:\n" +
+                        "x = " + ax + "\n" +
+                        "y = " + ay + "\n" +
+                        "z = " + az
+        );
     }
 
     // --------- PERMISSION + ENTRY POINT ---------
@@ -129,7 +162,7 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
             );
         } else {
             // Permission already granted
-            connectToBroker();
+            viewModel.startPublishing();      // sets isPublishing=true and connects
             startSensing();
             startSoundSensing();
         }
@@ -143,7 +176,7 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
         if (requestCode == REQ_RECORD_AUDIO) {
             if (grantResults.length > 0 &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                connectToBroker();
+                viewModel.startPublishing();
                 startSensing();
                 startSoundSensing();
             } else {
@@ -151,86 +184,10 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
                         "Microphone permission denied. Sound will not be measured.",
                         Toast.LENGTH_SHORT).show();
                 // Still start MQTT + other sensors
-                connectToBroker();
+                viewModel.startPublishing();
                 startSensing();
             }
         }
-    }
-
-    // --------- MQTT SETUP ---------
-
-    private void createMQTTclient() {
-        mqttClient = MqttClient.builder()
-                .useMqttVersion3()
-                .identifier("smartroom-android-" + System.currentTimeMillis())
-                .serverHost(serverHost)
-                .serverPort(serverPort)
-                .buildAsync();
-    }
-
-    private void connectToBroker() {
-        if (mqttClient == null) {
-            createMQTTclient();
-        }
-
-        txtConnectionStatus.setText("Connecting to MQTT...");
-
-        mqttClient.connectWith()
-                .send()
-                .whenComplete((connAck, throwable) -> {
-                    if (throwable != null) {
-                        Log.d(TAG, "Problem connecting to server: " + throwable);
-                        isMqttConnected = false;
-                        runOnUiThread(() ->
-                                txtConnectionStatus.setText("MQTT connection FAILED"));
-                    } else {
-                        Log.d(TAG, "Connected to server");
-                        isMqttConnected = true;
-                        runOnUiThread(() ->
-                                txtConnectionStatus.setText("MQTT connected, sensing..."));
-                    }
-                });
-    }
-
-    private void disconnectFromBroker() {
-        if (mqttClient != null) {
-            mqttClient.disconnect()
-                    .whenComplete((result, throwable) -> {
-                        if (throwable != null) {
-                            Log.d(TAG, "Problem disconnecting: " + throwable);
-                        } else {
-                            Log.d(TAG, "Disconnected from server");
-                        }
-                        isMqttConnected = false;
-                    });
-        }
-    }
-
-    private void publishSensorData() {
-        if (!isMqttConnected || mqttClient == null) {
-            return;
-        }
-
-        // Simple JSON payload with latest values
-        String payload = "{"
-                + "\"light\":" + lastLux + ","
-                + "\"ax\":" + lastAx + ","
-                + "\"ay\":" + lastAy + ","
-                + "\"az\":" + lastAz + ","
-                + "\"sound\":" + lastSoundLevel
-                + "}";
-
-        mqttClient.publishWith()
-                .topic(publishingTopic)
-                .payload(payload.getBytes())
-                .send()
-                .whenComplete((publish, throwable) -> {
-                    if (throwable != null) {
-                        Log.d(TAG, "Problem publishing sensor data: " + throwable);
-                    } else {
-                        Log.d(TAG, "Sensor data published: " + payload);
-                    }
-                });
     }
 
     // --------- SENSORS (light + accel) ---------
@@ -246,7 +203,6 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
         }
 
         isSensing = true;
-        txtConnectionStatus.setText("Sensing (waiting for MQTT connect...)");
     }
 
     private void stopSensing() {
@@ -254,7 +210,6 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
             sensorManager.unregisterListener(this);
         }
         isSensing = false;
-        txtConnectionStatus.setText("Sensing stopped");
     }
 
     @Override
@@ -264,23 +219,14 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
         int type = event.sensor.getType();
 
         if (type == Sensor.TYPE_LIGHT) {
-            lastLux = event.values[0];
-            txtLightValue.setText("Light: " + lastLux + " lx");
+            float lux = event.values[0];
+            viewModel.updateLight(lux);
         } else if (type == Sensor.TYPE_ACCELEROMETER) {
-            lastAx = event.values[0];
-            lastAy = event.values[1];
-            lastAz = event.values[2];
-
-            txtAccelValue.setText(
-                    "Accel:\n" +
-                            "x = " + lastAx + "\n" +
-                            "y = " + lastAy + "\n" +
-                            "z = " + lastAz
-            );
+            float ax = event.values[0];
+            float ay = event.values[1];
+            float az = event.values[2];
+            viewModel.updateAccel(ax, ay, az);
         }
-
-        // Every time we get a new sensor value, publish full snapshot (incl. sound)
-        publishSensorData();
     }
 
     @Override
@@ -297,7 +243,6 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
             mediaRecorder = new MediaRecorder();
             mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 
-            // More compatible format/encoder on modern Androids
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 
@@ -311,23 +256,15 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
             isSoundSensing = true;
             soundHandler.post(soundLevelRunnable);
 
-            if (txtSoundValue != null) {
-                txtSoundValue.setText("Sound: measuring...");
-            }
+            txtSoundValue.setText("Sound: measuring...");
 
         } catch (Exception e) {
             Log.e(TAG, "Error starting MediaRecorder", e);
             isSoundSensing = false;
-            lastSoundLevel = 0f;
 
             String msg = e.getClass().getSimpleName();
-            if (e.getMessage() != null) {
-                msg += ": " + e.getMessage();
-            }
-
-            if (txtSoundValue != null) {
-                txtSoundValue.setText("Sound error: " + msg);
-            }
+            if (e.getMessage() != null) msg += ": " + e.getMessage();
+            txtSoundValue.setText("Sound error: " + msg);
         }
     }
 
@@ -335,15 +272,9 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
         isSoundSensing = false;
         soundHandler.removeCallbacks(soundLevelRunnable);
         if (mediaRecorder != null) {
-            try {
-                mediaRecorder.stop();
-            } catch (Exception ignored) {}
-            try {
-                mediaRecorder.reset();
-            } catch (Exception ignored) {}
-            try {
-                mediaRecorder.release();
-            } catch (Exception ignored) {}
+            try { mediaRecorder.stop(); } catch (Exception ignored) {}
+            try { mediaRecorder.reset(); } catch (Exception ignored) {}
+            try { mediaRecorder.release(); } catch (Exception ignored) {}
             mediaRecorder = null;
         }
     }
@@ -354,10 +285,7 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
             if (!isSoundSensing || mediaRecorder == null) return;
             try {
                 int amp = mediaRecorder.getMaxAmplitude(); // 0..32767
-                lastSoundLevel = amp;
-                if (txtSoundValue != null) {
-                    txtSoundValue.setText("Sound level: " + amp);
-                }
+                viewModel.updateSound(amp);
             } catch (Exception e) {
                 Log.e(TAG, "Error reading sound level", e);
             }
@@ -369,8 +297,19 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
     @Override
     protected void onPause() {
         super.onPause();
+        // On rotation or leaving the app temporarily:
+        // stop local sensors/mic, but DO NOT change ViewModel's publishing state.
         stopSensing();
         stopSoundSensing();
-        disconnectFromBroker();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // If user really leaves this screen (back press), stop publishing + disconnect
+        if (isFinishing()) {
+            viewModel.stopPublishing();
+            viewModel.disconnectFromBroker();
+        }
     }
 }
