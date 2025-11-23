@@ -49,4 +49,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation("com.hivemq:hivemq-mqtt-client:1.3.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-livedata:2.8.4")
 }
