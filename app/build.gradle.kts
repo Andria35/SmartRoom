@@ -48,4 +48,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("com.hivemq:hivemq-mqtt-client:1.3.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 }
