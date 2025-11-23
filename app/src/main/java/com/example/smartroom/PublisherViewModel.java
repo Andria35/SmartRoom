@@ -40,11 +40,12 @@ public class PublisherViewModel extends ViewModel {
 
     public void startPublishing() {
         isPublishing.postValue(true);
+        // connectToBroker() will now handle starting the publish timer upon success
         connectToBroker();
 
-        // --- ADDED: Start the periodic publishing timer ---
-        publishHandler.removeCallbacks(publishRunnable);
-        publishHandler.post(publishRunnable);
+        // --- REMOVE THESE LINES ---
+        // publishHandler.removeCallbacks(publishRunnable);
+        // publishHandler.post(publishRunnable);
     }
 
     public void stopPublishing() {
@@ -114,7 +115,9 @@ public class PublisherViewModel extends ViewModel {
     public void connectToBroker() {
         Boolean connected = isConnected.getValue();
         if (connected != null && connected) {
-            // already connected
+            // already connected, ensure the timer is running
+            publishHandler.removeCallbacks(publishRunnable);
+            publishHandler.post(publishRunnable);
             return;
         }
 
@@ -133,6 +136,14 @@ public class PublisherViewModel extends ViewModel {
                         Log.d(TAG, "Connected to server");
                         isConnected.postValue(true);
                         statusText.postValue("MQTT connected, sensing...");
+
+                        // --- THE KEY FIX IS HERE ---
+                        // Only start the publishing timer after a successful connection.
+                        Boolean publishing = isPublishing.getValue();
+                        if (publishing != null && publishing) {
+                            publishHandler.removeCallbacks(publishRunnable);
+                            publishHandler.post(publishRunnable);
+                        }
                     }
                 });
     }
