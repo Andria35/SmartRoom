@@ -1,9 +1,10 @@
-package com.example.smartroom;   // <-- change to your real package name
+package com.example.smartroom;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +12,7 @@ import com.example.smartroom.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnPoliceStation;
+    private Button btnAirQuality;
     private Button btnPublish;
     private Button btnSubscribe;
     private Button btnSettings;
@@ -22,34 +23,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);   // uses your XML
 
         // 1. Connect XML views to Java
-        btnPoliceStation = findViewById(R.id.btnPoliceStation);
-        btnPublish       = findViewById(R.id.btnPublish);
-        btnSubscribe     = findViewById(R.id.btnSubscribe);
-        btnSettings      = findViewById(R.id.btnSettings);
+        btnAirQuality = findViewById(R.id.btnAirQuality);
+        btnPublish    = findViewById(R.id.btnPublish);
+        btnSubscribe  = findViewById(R.id.btnSubscribe);
+        btnSettings   = findViewById(R.id.btnSettings);
 
         // 2. Set click listeners
-        btnPoliceStation.setOnClickListener(new View.OnClickListener() {
+        btnAirQuality.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: open Police Station screen or do something
-                Toast.makeText(MainActivity.this,
-                        "Police Station clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, AirQualityActivity.class);
+                startActivity(intent);
             }
         });
 
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: open Publish screen
-                Toast.makeText(MainActivity.this,
-                        "Publish clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, PublisherActivity.class);
+                startActivity(intent);
             }
         });
 
         btnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: open Subscribe screen
                 Toast.makeText(MainActivity.this,
                         "Subscribe clicked", Toast.LENGTH_SHORT).show();
             }
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: open Settings screen
                 Toast.makeText(MainActivity.this,
                         "Settings clicked", Toast.LENGTH_SHORT).show();
             }

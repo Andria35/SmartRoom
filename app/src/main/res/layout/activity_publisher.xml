@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="top|center_horizontal"
+    tools:context=".PublisherActivity">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Publisher: Room Sensor"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <!-- MQTT connection status -->
+    <TextView
+        android:id="@+id/txtConnectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: Disconnected"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Light sensor section -->
+    <TextView
+        android:id="@+id/txtLightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Light sensor (lux):"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/txtLightValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="—"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Accelerometer section -->
+    <TextView
+        android:id="@+id/txtAccelLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accelerometer (x, y, z):"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/txtAccelValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="—"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Sound section (closer to others) -->
+    <TextView
+        android:id="@+id/txtSoundLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sound level (mic):"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/txtSoundValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="—"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Start / Stop buttons -->
+    <Button
+        android:id="@+id/btnStartPublishing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Publishing"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnStopPublishing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stop Publishing" />
+
+</LinearLayout>
