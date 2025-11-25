@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="20dp"
+    android:padding="12dp"
     android:background="#F6F4FB"
     tools:context=".PublisherActivity">
 
@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="2"
-        android:paddingEnd="16dp">
+        android:paddingEnd="8dp">
 
         <!-- Title -->
         <TextView
@@ -22,10 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Publisher: Room Sensor"
-            android:textSize="26sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#222222"
-            android:layout_marginBottom="6dp" />
+            android:layout_marginBottom="4dp" />
 
         <!-- Status -->
         <TextView
@@ -33,9 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status: Disconnected"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="#666666"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="8dp" />
 
         <!-- SENSOR CARD -->
         <LinearLayout
@@ -43,9 +43,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#FFFFFF"
-            android:elevation="6dp"
-            android:padding="20dp"
-            android:layout_marginEnd="12dp"
+            android:elevation="4dp"
+            android:padding="12dp"
+            android:layout_marginEnd="4dp"
             android:layout_marginTop="4dp">
 
             <!-- Light -->
@@ -54,18 +54,18 @@
                 android:layout_height="wrap_content"
                 android:text="Light Sensor"
                 android:textStyle="bold"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#333333" />
 
             <TextView
                 android:id="@+id/txtLightValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:text="Light: — lx"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#555555"
-                android:layout_marginBottom="20dp" />
+                android:layout_marginBottom="8dp" />
 
             <!-- Accelerometer -->
             <TextView
@@ -73,17 +73,17 @@
                 android:layout_height="wrap_content"
                 android:text="Accelerometer"
                 android:textStyle="bold"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#333333" />
 
             <TextView
                 android:id="@+id/txtAccelValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
                 android:text="x = —    y = —    z = —"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#555555" />
 
             <!-- Sound -->
@@ -92,21 +92,20 @@
                 android:layout_height="wrap_content"
                 android:text="Sound level"
                 android:textStyle="bold"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#333333" />
 
             <TextView
                 android:id="@+id/txtSoundValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:text="Sound: — dB"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="#555555" />
         </LinearLayout>
 
     </LinearLayout>
-
 
     <!-- RIGHT PANEL: Buttons -->
     <LinearLayout
@@ -119,20 +118,20 @@
         <Button
             android:id="@+id/btnStartPublishing"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:text="Start Publishing"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:backgroundTint="#7B68EE"
             android:textColor="#FFFFFF"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/btnStopPublishing"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:text="Stop Publishing"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:backgroundTint="#7B68EE"
             android:textColor="#FFFFFF" />
