@@ -25,53 +25,65 @@
     <!-- Error -->
     <TextView
         android:id="@+id/txtError"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/holo_red_dark"
         android:visibility="gone"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         app:layout_constraintTop_toBottomOf="@id/txtTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Recycler -->
+    <!-- LEFT SIDE — RecyclerView with 2 columns -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerAirQuality"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:overScrollMode="always"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="70dp"
-        app:layout_constraintTop_toBottomOf="@id/txtError"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnRefresh" />
+        android:paddingEnd="16dp"
 
-    <!-- Refresh Button (fixed at bottom) -->
-    <Button
-        android:id="@+id/btnRefresh"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="Refresh"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#7B68EE"
-        android:elevation="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/txtError"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/rightPanel"
 
-    <!-- Loading -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btnRefresh"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.75"
+
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2" />
+
+    <!-- RIGHT PANEL -->
+    <LinearLayout
+        android:id="@+id/rightPanel"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toTopOf="@id/recyclerAirQuality"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerAirQuality"
+        app:layout_constraintStart_toEndOf="@id/recyclerAirQuality"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="8dp" />
+
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.25">
+
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Refresh"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#7B68EE" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

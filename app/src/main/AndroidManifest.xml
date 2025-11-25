@@ -22,6 +22,7 @@
         <activity
             android:name=".PublisherActivity"
             android:exported="false" />
+        <activity android:name=".SubscriberActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         btnSubscribe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,
-                        "Subscribe clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, SubscriberActivity.class);
+                startActivity(intent);
             }
         });
 
