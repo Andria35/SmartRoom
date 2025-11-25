@@ -20,7 +20,7 @@ public class PublisherViewModel extends ViewModel {
     private static final long PUBLISH_INTERVAL_MS = 2000; // Publish every 2 seconds (adjust as needed)
 
     // MQTT config
-    private String serverHost = "192.168.0.103";  // your Mac IP
+    private String serverHost = "192.168.1.131";  // your Mac IP
     private int serverPort = 1883;
     private String publishingTopic = "smartroom/test";
 
