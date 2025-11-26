@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.settings.view;
 
 import android.os.Bundle;
 import android.widget.CompoundButton;
@@ -9,6 +9,9 @@ import android.graphics.Color;
 import android.util.TypedValue;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.smartroom.helpers.AccessibilityPrefs;
+import com.example.smartroom.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

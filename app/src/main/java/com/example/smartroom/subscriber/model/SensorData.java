@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.subscriber.model;
 
 public class SensorData {
     public float light;

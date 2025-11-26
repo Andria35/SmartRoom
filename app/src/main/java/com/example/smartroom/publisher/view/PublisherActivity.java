@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.publisher.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +20,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.smartroom.helpers.AccessibilityPrefs;
+import com.example.smartroom.publisher.viewModel.PublisherViewModel;
+import com.example.smartroom.R;
 
 import java.io.File;
 

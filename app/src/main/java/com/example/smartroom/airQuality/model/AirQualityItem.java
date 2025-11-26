@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.airQuality.model;
 
 public class AirQualityItem {
     private final String station;

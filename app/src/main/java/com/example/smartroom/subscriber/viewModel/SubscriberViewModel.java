@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.subscriber.viewModel;
 
 import android.util.Log;
 
@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.smartroom.subscriber.model.SensorData;
 import com.hivemq.client.mqtt.MqttClient;
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 

@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.subscriber.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.smartroom.helpers.AccessibilityPrefs;
+import com.example.smartroom.R;
+import com.example.smartroom.subscriber.viewModel.SubscriberViewModel;
 
 public class SubscriberActivity extends AppCompatActivity {
 

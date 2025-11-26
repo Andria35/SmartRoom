@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.main.view;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +10,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.smartroom.helpers.AccessibilityPrefs;
+import com.example.smartroom.publisher.view.PublisherActivity;
+import com.example.smartroom.R;
+import com.example.smartroom.settings.view.SettingsActivity;
+import com.example.smartroom.subscriber.view.SubscriberActivity;
+import com.example.smartroom.airQuality.view.AirQualityActivity;
 
 public class MainActivity extends AppCompatActivity {
 

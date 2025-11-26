@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.airQuality.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.smartroom.helpers.AccessibilityPrefs;
+import com.example.smartroom.airQuality.model.AirQualityItem;
+import com.example.smartroom.airQuality.viewModel.AirQualityViewModel;
+import com.example.smartroom.R;
 
 import java.util.List;
 

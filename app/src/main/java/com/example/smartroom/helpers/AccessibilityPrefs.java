@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.helpers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.airQuality.view;
 
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.smartroom.R;
+import com.example.smartroom.airQuality.model.AirQualityItem;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="#F6F4FB"
-    tools:context=".AirQualityActivity">
+    tools:context=".airQuality.view.AirQualityActivity">
 
     <!-- Title -->
     <TextView

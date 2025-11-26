@@ -17,17 +17,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settings.view.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".AirQualityActivity"
+            android:name=".airQuality.view.AirQualityActivity"
             android:exported="false" />
         <activity
-            android:name=".PublisherActivity"
+            android:name=".publisher.view.PublisherActivity"
             android:exported="false" />
-        <activity android:name=".SubscriberActivity" />
+        <activity android:name=".subscriber.view.SubscriberActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".main.view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
