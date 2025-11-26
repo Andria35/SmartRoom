@@ -112,12 +112,12 @@ public class AirQualityActivity extends AppCompatActivity {
         txtTitle.setTextColor(Color.BLACK);
 
         // Error text
-        float errorSize = enabled ? 16f : 14f;
+        float errorSize = enabled ? 28f : 14f;
         txtError.setTextSize(TypedValue.COMPLEX_UNIT_SP, errorSize);
         txtError.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
 
         // Button font
-        float buttonSize = enabled ? 18f : 16f;
+        float buttonSize = enabled ? 26f : 16f;
         btnRefresh.setTextSize(TypedValue.COMPLEX_UNIT_SP, buttonSize);
     }
 

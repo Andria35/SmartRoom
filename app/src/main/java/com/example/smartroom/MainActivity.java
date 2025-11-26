@@ -1,16 +1,21 @@
 package com.example.smartroom;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.smartroom.R;
-
 public class MainActivity extends AppCompatActivity {
+
+    private ViewGroup mainRoot;
+    private TextView txtHeader;
+    private TextView txtSubtitle;
 
     private Button btnAirQuality;
     private Button btnPublish;
@@ -23,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);   // uses your XML
 
         // 1. Connect XML views to Java
+        mainRoot    = findViewById(R.id.mainRoot);
+        txtHeader   = findViewById(R.id.txtHeader);
+        txtSubtitle = findViewById(R.id.txtSubtitle);
+
         btnAirQuality = findViewById(R.id.btnAirQuality);
         btnPublish    = findViewById(R.id.btnPublish);
         btnSubscribe  = findViewById(R.id.btnSubscribe);
@@ -60,5 +69,57 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 3. Initial accessibility styling
+        applyAccessibilityMode();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Re-apply in case user changed the accessibility toggle in Settings
+        applyAccessibilityMode();
+    }
+
+    private void applyAccessibilityMode() {
+        boolean enabled = AccessibilityPrefs.isAccessibilityEnabled(this);
+
+        // Background
+        if (mainRoot != null) {
+            if (enabled) {
+                mainRoot.setBackgroundColor(Color.WHITE);    // high contrast mode
+            } else {
+                mainRoot.setBackgroundColor(0xFFF5F5F7);     // original background
+            }
+        }
+
+        if (enabled) {
+            // Accessibility ON → use 28sp for all texts
+            float big = 30f;
+
+            txtHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, big);
+            txtHeader.setTextColor(Color.BLACK);
+
+            txtSubtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, big);
+            txtSubtitle.setTextColor(Color.BLACK);
+
+            btnAirQuality.setTextSize(TypedValue.COMPLEX_UNIT_SP, big);
+            btnPublish.setTextSize(TypedValue.COMPLEX_UNIT_SP, big);
+            btnSubscribe.setTextSize(TypedValue.COMPLEX_UNIT_SP, big);
+            btnSettings.setTextSize(TypedValue.COMPLEX_UNIT_SP, big);
+        } else {
+            // Accessibility OFF → normal design from your XML
+            txtHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32f);
+            txtHeader.setTextColor(Color.parseColor("#222222"));
+
+            txtSubtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
+            txtSubtitle.setTextColor(Color.parseColor("#666666"));
+
+            float normalButtonSize = 18f;
+            btnAirQuality.setTextSize(TypedValue.COMPLEX_UNIT_SP, normalButtonSize);
+            btnPublish.setTextSize(TypedValue.COMPLEX_UNIT_SP, normalButtonSize);
+            btnSubscribe.setTextSize(TypedValue.COMPLEX_UNIT_SP, normalButtonSize);
+            btnSettings.setTextSize(TypedValue.COMPLEX_UNIT_SP, normalButtonSize);
+        }
     }
 }
