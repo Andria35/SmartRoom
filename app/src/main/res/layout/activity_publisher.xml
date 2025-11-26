@@ -1,130 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/publisherRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="20dp"
+    android:gravity="center_horizontal"
     android:background="#F6F4FB"
     tools:context=".PublisherActivity">
 
+    <!-- TITLE -->
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Publisher: Room Sensor"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:textColor="#222222"
+        android:layout_marginBottom="8dp" />
+
+    <!-- STATUS -->
+    <TextView
+        android:id="@+id/txtConnectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status: Disconnected"
+        android:textSize="16sp"
+        android:textColor="#666666"
+        android:layout_marginBottom="24dp" />
+
+    <!-- CARD WITH SENSORS -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:background="#FFFFFF"
+        android:padding="20dp"
+        android:elevation="4dp"
+        android:layout_margin="8dp">
 
-        <!-- TITLE -->
+        <!-- Light Section -->
         <TextView
-            android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Publisher: Room Sensor"
-            android:textSize="26sp"
+            android:text="Light sensor"
             android:textStyle="bold"
-            android:textColor="#222222"
-            android:layout_marginBottom="8dp" />
+            android:textSize="18sp"
+            android:textColor="#333333" />
 
-        <!-- STATUS -->
         <TextView
-            android:id="@+id/txtConnectionStatus"
+            android:id="@+id/txtLightValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status: Disconnected"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="16dp"
+            android:text="Light: — lx"
             android:textSize="16sp"
-            android:textColor="#666666"
-            android:layout_marginBottom="24dp" />
+            android:textColor="#555555" />
 
-        <!-- CARD WITH SENSORS -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Accelerometer Section -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#FFFFFF"
-            android:padding="20dp"
-            android:elevation="4dp"
-            android:layout_margin="8dp">
-
-            <!-- Light Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Light sensor"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#333333" />
-
-            <TextView
-                android:id="@+id/txtLightValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="16dp"
-                android:text="Light: — lx"
-                android:textSize="16sp"
-                android:textColor="#555555" />
-
-            <!-- Accelerometer Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Accelerometer"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#333333" />
-
-            <TextView
-                android:id="@+id/txtAccelValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="16dp"
-                android:text="x = —    y = —    z = —"
-                android:textSize="16sp"
-                android:textColor="#555555" />
-
-            <!-- Sound Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sound level"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#333333" />
-
-            <TextView
-                android:id="@+id/txtSoundValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="Sound: — dB"
-                android:textSize="16sp"
-                android:textColor="#555555" />
-        </LinearLayout>
-
-        <!-- Start Publishing -->
-        <Button
-            android:id="@+id/btnStartPublishing"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Start Publishing"
-            android:textSize="18sp"
+            android:text="Accelerometer"
             android:textStyle="bold"
-            android:backgroundTint="#7B68EE"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Stop Publishing -->
-        <Button
-            android:id="@+id/btnStopPublishing"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="Stop Publishing"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:backgroundTint="#7B68EE"
-            android:textColor="#FFFFFF" />
+            android:textColor="#333333" />
 
+        <TextView
+            android:id="@+id/txtAccelValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="16dp"
+            android:text="x = —    y = —    z = —"
+            android:textSize="16sp"
+            android:textColor="#555555" />
+
+        <!-- Sound Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sound level"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#333333" />
+
+        <TextView
+            android:id="@+id/txtSoundValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Sound: — dB"
+            android:textSize="16sp"
+            android:textColor="#555555" />
     </LinearLayout>
 
-</ScrollView>
+    <!-- Start Publishing -->
+    <Button
+        android:id="@+id/btnStartPublishing"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Start Publishing"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#7B68EE"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Stop Publishing -->
+    <Button
+        android:id="@+id/btnStopPublishing"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Stop Publishing"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="#7B68EE"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

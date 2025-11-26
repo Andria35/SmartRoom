@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import android.view.ViewGroup;
+import android.util.TypedValue;
+import android.graphics.Color;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -50,6 +53,17 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
     private PublisherViewModel viewModel;
 
     private static final String TAG = "SmartRoomMQTT";
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Re-read the preference every time the screen becomes visible
+        boolean accessibilityOn = AccessibilityPrefs.isAccessibilityEnabled(this);
+        ViewGroup root = findViewById(R.id.publisherRoot);
+        applyAccessibilityMode(accessibilityOn, root);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -311,5 +325,26 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
             viewModel.stopPublishing();
             viewModel.disconnectFromBroker();
         }
+    }
+
+    private void applyAccessibilityMode(boolean enabled, ViewGroup root) {
+        if (!enabled) return;
+
+        if (root != null) {
+            root.setBackgroundColor(Color.WHITE);
+        }
+
+        txtConnectionStatus.setTextColor(Color.BLACK);
+        txtLightValue.setTextColor(Color.BLACK);
+        txtAccelValue.setTextColor(Color.BLACK);
+        txtSoundValue.setTextColor(Color.BLACK);
+
+        txtConnectionStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        txtLightValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        txtAccelValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        txtSoundValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+
+        btnStartPublishing.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        btnStopPublishing.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
     }
 }
