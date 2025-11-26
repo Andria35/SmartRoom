@@ -1,4 +1,4 @@
-package com.example.smartroom;
+package com.example.smartroom.publisher.viewModel;
 
 import android.util.Log;
 

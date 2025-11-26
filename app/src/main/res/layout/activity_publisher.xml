@@ -3,15 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
-    android:background="#F6F4FB"
-    tools:context=".PublisherActivity">
+    android:fillViewport="true"
+    tools:context=".publisher.view.PublisherActivity">
 
     <LinearLayout
+        android:id="@+id/publisherRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:padding="20dp"
+        android:gravity="center_horizontal"
+        android:background="#F6F4FB">
 
         <!-- TITLE -->
         <TextView

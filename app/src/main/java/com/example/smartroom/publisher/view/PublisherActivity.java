@@ -1,11 +1,14 @@
-package com.example.smartroom;
+package com.example.smartroom.publisher.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
-
+import android.view.ViewGroup;
+import android.util.TypedValue;
+import android.graphics.Color;
+import android.view.View;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -17,10 +20,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.smartroom.helpers.AccessibilityPrefs;
+import com.example.smartroom.publisher.viewModel.PublisherViewModel;
+import com.example.smartroom.R;
 
 import java.io.File;
 
@@ -52,6 +58,17 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
     private static final String TAG = "SmartRoomMQTT";
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Re-read the preference every time the screen becomes visible
+        boolean accessibilityOn = AccessibilityPrefs.isAccessibilityEnabled(this);
+        ViewGroup root = findViewById(R.id.publisherRoot);
+        applyAccessibilityMode(accessibilityOn, root);
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publisher);
@@ -63,6 +80,10 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
         txtSoundValue       = findViewById(R.id.txtSoundValue);
         btnStartPublishing  = findViewById(R.id.btnStartPublishing);
         btnStopPublishing   = findViewById(R.id.btnStopPublishing);
+
+        txtConnectionStatus.setAccessibilityLiveRegion(
+                View.ACCESSIBILITY_LIVE_REGION_POLITE
+        );
 
         // ---- ViewModel ----
         viewModel = new ViewModelProvider(this).get(PublisherViewModel.class);
@@ -311,5 +332,26 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
             viewModel.stopPublishing();
             viewModel.disconnectFromBroker();
         }
+    }
+
+    private void applyAccessibilityMode(boolean enabled, ViewGroup root) {
+        if (!enabled) return;
+
+        if (root != null) {
+            root.setBackgroundColor(Color.WHITE);
+        }
+
+        txtConnectionStatus.setTextColor(Color.BLACK);
+        txtLightValue.setTextColor(Color.BLACK);
+        txtAccelValue.setTextColor(Color.BLACK);
+        txtSoundValue.setTextColor(Color.BLACK);
+
+        txtConnectionStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        txtLightValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        txtAccelValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        txtSoundValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+
+        btnStartPublishing.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
+        btnStopPublishing.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28);
     }
 }

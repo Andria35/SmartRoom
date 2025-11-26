@@ -1,10 +1,12 @@
-package com.example.smartroom;
+package com.example.smartroom.airQuality.viewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import android.util.Log;
+
+import com.example.smartroom.airQuality.model.AirQualityItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;

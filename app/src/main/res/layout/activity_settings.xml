@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="28dp"
+    android:background="#FFFFFF"
+    tools:context=".settings.view.SettingsActivity">
+
+    <TextView
+        android:id="@+id/txtSettingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accessibility settings"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#222222"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/txtAccessibilityDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accessibility mode increases text size and contrast for users with low vision or in poor visibility conditions."
+        android:textSize="18sp"
+        android:textColor="#555555"
+        android:layout_marginBottom="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/txtAccessibilityLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Accessibility mode"
+            android:textSize="20sp"
+            android:textColor="#222222" />
+
+        <Switch
+            android:id="@+id/switchAccessibility"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
