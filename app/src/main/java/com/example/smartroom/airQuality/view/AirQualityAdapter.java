@@ -61,6 +61,14 @@ public class AirQualityAdapter extends RecyclerView.Adapter<AirQualityAdapter.AQ
         holder.txtPollutant.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondarySize);
         holder.txtValue.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondarySize);
         holder.txtTimestamp.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondarySize);
+
+        // ---- TalkBack: describe the whole card ----
+        String cd = item.getStation()
+                + ", pollutant " + item.getPollutant()
+                + ", value " + item.getValue()
+                + ", updated " + item.getTimestamp();
+
+        holder.itemView.setContentDescription(cd);
     }
 
     @Override

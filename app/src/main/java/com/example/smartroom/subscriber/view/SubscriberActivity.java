@@ -6,7 +6,7 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -41,6 +41,9 @@ public class SubscriberActivity extends AppCompatActivity {
         soundValue     = findViewById(R.id.soundValue);
         btnConnect     = findViewById(R.id.btnConnect);
         btnDisconnect  = findViewById(R.id.btnDisconnect);
+
+        statusText.setAccessibilityLiveRegion(
+                View.ACCESSIBILITY_LIVE_REGION_POLITE);
 
         // ---- ViewModel bindings ----
 

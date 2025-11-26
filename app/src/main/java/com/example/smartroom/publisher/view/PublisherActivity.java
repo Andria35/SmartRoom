@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.ViewGroup;
 import android.util.TypedValue;
 import android.graphics.Color;
-
+import android.view.View;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -80,6 +80,10 @@ public class PublisherActivity extends AppCompatActivity implements SensorEventL
         txtSoundValue       = findViewById(R.id.txtSoundValue);
         btnStartPublishing  = findViewById(R.id.btnStartPublishing);
         btnStopPublishing   = findViewById(R.id.btnStopPublishing);
+
+        txtConnectionStatus.setAccessibilityLiveRegion(
+                View.ACCESSIBILITY_LIVE_REGION_POLITE
+        );
 
         // ---- ViewModel ----
         viewModel = new ViewModelProvider(this).get(PublisherViewModel.class);
