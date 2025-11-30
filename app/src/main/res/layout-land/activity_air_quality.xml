@@ -71,7 +71,7 @@
             android:text="Refresh"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#7B68EE" />
+            />
 
         <ProgressBar
             android:id="@+id/progressBar"
