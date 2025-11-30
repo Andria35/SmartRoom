@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.smartroom.Constants;
 import com.example.smartroom.subscriber.model.SensorData;
 import com.hivemq.client.mqtt.MqttClient;
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
@@ -17,9 +18,9 @@ public class SubscriberViewModel extends ViewModel {
     private final MutableLiveData<SensorData> parsedData = new MutableLiveData<>();
     public LiveData<SensorData> getParsedData() { return parsedData; }
 
-    private final String serverHost = "192.168.0.103"; // твой IP
+    private final String serverHost = Constants.serverIP;
     private final int serverPort = 1883;
-    private final String subscribeTopic = "smartroom/test";
+    private final String subscribeTopic = Constants.mqttTopics;
 
     private Mqtt3AsyncClient mqttClient;
 
@@ -112,10 +113,10 @@ public class SubscriberViewModel extends ViewModel {
 
     private SensorData parseSensorData(String json) {
         try {
-            // Удаляем фигурные скобки
+            // deleting '{' '}'
             json = json.replace("{", "").replace("}", "");
 
-            // Разбиваем на пары "key:value"
+            // dividing into pairs "key:value"
             String[] parts = json.split(",");
 
             SensorData data = new SensorData();
