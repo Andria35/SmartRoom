@@ -75,14 +75,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (enabled) {
             // Accessibility ON → extra big
-            txtSettingsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 32f);
-            txtAccessibilityDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
-            txtAccessibilityLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26f);
+            txtSettingsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 26f);
+            txtAccessibilityDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f);
+            txtAccessibilityLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f);
         } else {
             // Accessibility OFF → still bigger than normal app screens, but less huge
-            txtSettingsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 28f);
-            txtAccessibilityDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f);
-            txtAccessibilityLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f);
+            txtSettingsTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f);
+            txtAccessibilityDescription.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
+            txtAccessibilityLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         }
 
         txtSettingsTitle.setTextColor(Color.BLACK);

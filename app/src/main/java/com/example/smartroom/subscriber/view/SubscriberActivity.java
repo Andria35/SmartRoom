@@ -47,10 +47,10 @@ public class SubscriberActivity extends AppCompatActivity {
 
         // ---- ViewModel bindings ----
 
-        // статус
+        // status
         viewModel.getStatusText().observe(this, statusText::setText);
 
-        // новые данные сенсора
+        // new sensor values
         viewModel.getParsedData().observe(this, data -> {
             if (data != null) {
                 lightValue.setText("Light: " + data.light);

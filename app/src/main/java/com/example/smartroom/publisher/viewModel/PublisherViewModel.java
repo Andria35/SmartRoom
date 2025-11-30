@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.example.smartroom.Constants;
 import com.hivemq.client.mqtt.MqttClient;
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 
@@ -20,9 +21,9 @@ public class PublisherViewModel extends ViewModel {
     private static final long PUBLISH_INTERVAL_MS = 2000; // Publish every 2 seconds (adjust as needed)
 
     // MQTT config
-    private String serverHost = "192.168.1.131";  // your Mac IP
-    private int serverPort = 1883;
-    private String publishingTopic = "smartroom/test";
+    private String serverHost = Constants.serverIP;
+    private int serverPort = Constants.serverPort;
+    private String publishingTopic = Constants.mqttTopics;
 
     private Mqtt3AsyncClient mqttClient;
 
