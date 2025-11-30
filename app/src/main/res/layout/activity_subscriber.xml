@@ -30,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <!-- Карточка сенсора -->
         <LinearLayout
             android:id="@+id/sensorCard"
             android:orientation="vertical"
@@ -101,7 +100,6 @@
             android:layout_height="wrap_content"
             android:paddingVertical="12dp" />
 
-        <!-- Разделитель -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
