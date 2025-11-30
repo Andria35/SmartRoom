@@ -19,7 +19,7 @@ public class SubscriberViewModel extends ViewModel {
     public LiveData<SensorData> getParsedData() { return parsedData; }
 
     private final String serverHost = Constants.serverIP;
-    private final int serverPort = 1883;
+    private final int serverPort = Constants.serverPort;
     private final String subscribeTopic = Constants.mqttTopics;
 
     private Mqtt3AsyncClient mqttClient;

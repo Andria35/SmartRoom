@@ -22,7 +22,7 @@ public class PublisherViewModel extends ViewModel {
 
     // MQTT config
     private String serverHost = Constants.serverIP;
-    private int serverPort = 1883;
+    private int serverPort = Constants.serverPort;
     private String publishingTopic = Constants.mqttTopics;
 
     private Mqtt3AsyncClient mqttClient;
