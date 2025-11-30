@@ -16,40 +16,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- LEFT PANEL -->
+        <!-- LEFT PANEL (FULL WIDTH SENSOR BLOCK) -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:paddingEnd="8dp"
             android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Publisher: Room Sensor"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#222222"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:id="@+id/txtConnectionStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Status: Disconnected"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#222222"
-                android:layout_marginBottom="12dp" />
-
             <!-- SENSOR CARD -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
                 android:layout_margin="8dp"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="12dp"
@@ -138,11 +117,10 @@
 
         </LinearLayout>
 
-        <!-- RIGHT PANEL -->
+        <!-- RIGHT PANEL (TITLE + BUTTONS) -->
         <androidx.cardview.widget.CardView
-            android:layout_width="0dp"
+            android:layout_width="260dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="8dp"
             app:cardElevation="6dp"
             app:cardCornerRadius="12dp"
@@ -153,8 +131,30 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:gravity="center">
+                android:gravity="top|center_horizontal">
 
+                <!-- TITLE MOVED HERE (RIGHT SIDE) -->
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Publisher: Room Sensor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#222222"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/txtConnectionStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Status: Disconnected"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#222222"
+                    android:layout_marginBottom="24dp" />
+
+                <!-- BUTTONS -->
                 <Button
                     android:id="@+id/btnStartPublishing"
                     android:layout_width="match_parent"
