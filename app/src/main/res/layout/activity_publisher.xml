@@ -140,7 +140,7 @@
                 android:id="@+id/btnStartPublishing"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Start Publishing"
+                android:text="Start"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
@@ -150,7 +150,7 @@
                 android:id="@+id/btnStopPublishing"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Stop Publishing"
+                android:text="Stop"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF" />
